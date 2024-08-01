@@ -1,33 +1,60 @@
-import { useRef, useState } from 'react'
-import './App.css'
+import { useRef, useState } from "react";
+import "./App.css";
 
 function App() {
-
-  const [todos, setTodos] = useState ([]);
+  const [todos, setTodos] = useState([]);
 
   const inputRef = useRef();
 
-  const handleAddToDo = () => {
+  const handleAddTodo = () => {
     const text = inputRef.current.value;
-    const newitem = 
-    setTodos([...todos, text]);
-    inputRef.current.value = '';
+   
+    if (inputRef.current.value == ''){
+      window.alert('you should type something to do..!')
+    }else{
+      const newItem = { completed: false, text };
+      setTodos([...todos, newItem]);
+      inputRef.current.value = "";
+    }
+  };
+
+  const handleItemDone = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].completed = !newTodos[index].completed;
+    setTodos(newTodos);
+  };
+
+  const handleDeleteItem = (index) => {
+    const newTodos = [...todos];
+    newTodos.splice(index, 1)
+    setTodos(newTodos)
   }
 
   return (
-    <>
+    <div className="App">
+      <h2 className="h2"><u>.. To Do List ..</u></h2>
       <div className="to-do-container">
-      <h2>To do List</h2>
-      <ul>
-          {todos.map(({text, completed}, index) => {
-            return <li key={index}>{text}</li>;
+        <ul>
+          {todos.map(({ text, completed }, index) => {
+            return (
+              <div className="item">
+                <li
+                  className={completed ? "done" : ""}
+                  key={index}
+                  onClick={() => handleItemDone(index)}
+                >
+                  {text}
+                </li>
+                <span onClick={() => handleDeleteItem(index)} className="trash">❌</span>
+              </div>
+            );
           })}
-      </ul>
-      <input ref={inputRef} placeholder='Enter item...'/>
-      <button onClick={handleAddToDo}>Add</button>
+        </ul>
+        <input ref={inputRef} placeholder="Enter item..." />
+        <button onClick={handleAddTodo}>Add</button>
       </div>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
