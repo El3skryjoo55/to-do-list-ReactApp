@@ -1,0 +1,17 @@
+body{
+  border: 2.5px solid gray;
+  margin: 50px 30px;
+  padding: 25px 15px;
+}
+.to-do-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.to-do-container ul li{
+  width: 180px;
+  overflow-wrap: break-word;
+  list-style-type: '➡  ';
+  cursor: pointer;
+  
+}
